@@ -7,7 +7,7 @@ st.set_page_config(page_icon='🍃', page_title='MRC for Legal Document Dataset 
 
 st.markdown("<h2 style='text-align: center;'>Investigation Legal Dataset checker for Machine Reading Comprehension</h2>", unsafe_allow_html=True)
 
-df = pd.read_csv(filepath_or_buffer=r'./Datasets/data_unverified.csv')
+df = pd.read_csv(filepath_or_buffer=r'./Datasets/ViBidLQA_demo.csv')
 
 
 if 'idx' not in st.session_state:
@@ -53,7 +53,7 @@ if len(df) != 0:
         df['answer'][st.session_state.idx] = txt_answer
 
         btn_download = col_4.download_button(data=df.to_csv(), label=':arrow_down_small: Download file', use_container_width=True, file_name="checked.csv", mime="text/csv")
-        df.to_csv(path_or_buf=r'./Datasets/data_unverified.csv', index=None)
+        df.to_csv(path_or_buf=r'./Datasets/ViBidLQA_demo.csv', index=None)
 
     if btn_goto:
         st.session_state.idx = txt_goto - 1
