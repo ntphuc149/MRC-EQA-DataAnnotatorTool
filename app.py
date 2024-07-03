@@ -7,7 +7,7 @@ st.set_page_config(page_icon='🍃', page_title='MRC for Legal Document Dataset 
 
 st.markdown("<h2 style='text-align: center;'>Investigation Legal Dataset checker for Machine Reading Comprehension</h2>", unsafe_allow_html=True)
 
-df = pd.read_csv(filepath_or_buffer=r'./Datasets/ViBidLQA_demo.csv')
+df = pd.read_csv(filepath_or_buffer=r'D:\KNOWLEDGES FUNDAMENTAL\YEAR 3\[NLP] INVESTIGATION LEGAL DOCUMENTS\Datasets\check_data_synthesized\Phuc.csv')
 
 
 if 'idx' not in st.session_state:
@@ -30,8 +30,11 @@ if len(df) != 0:
     txt_answer = st.text_area(height=100, label='Your answer:', value=df['answer'][st.session_state.idx])
 
     if txt_answer.strip() and txt_context.strip():
-        highlighted_context = re.sub(re.escape(txt_answer), "<mark>" + txt_answer + "</mark>", txt_context, flags=re.IGNORECASE)
-        st.markdown(highlighted_context, unsafe_allow_html=True)
+        start_pos = txt_context.find(txt_answer)
+        if start_pos != -1:
+            end_pos = start_pos + len(txt_answer)
+            highlighted_context = txt_context[:start_pos] + "<mark>" + txt_context[start_pos:end_pos] + "</mark>" + txt_context[end_pos:]
+            st.markdown(highlighted_context, unsafe_allow_html=True)
 
     if btn_previous:
         if st.session_state.idx > 0:
@@ -53,7 +56,7 @@ if len(df) != 0:
         df['answer'][st.session_state.idx] = txt_answer
 
         btn_download = col_4.download_button(data=df.to_csv(), label=':arrow_down_small: Download file', use_container_width=True, file_name="checked.csv", mime="text/csv")
-        df.to_csv(path_or_buf=r'./Datasets/ViBidLQA_demo.csv', index=None)
+        df.to_csv(path_or_buf=r'D:\KNOWLEDGES FUNDAMENTAL\YEAR 3\[NLP] INVESTIGATION LEGAL DOCUMENTS\Datasets\check_data_synthesized\Phuc.csv', index=None)
 
     if btn_goto:
         st.session_state.idx = txt_goto - 1
